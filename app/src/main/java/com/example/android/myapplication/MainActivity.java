@@ -1,7 +1,9 @@
 package com.example.android.myapplication;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -13,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Build a Layout and a button. Just objects in memory at this point
+                //Build a Layout and a button. Just objects in memory at this point
         RelativeLayout myLayout = new RelativeLayout(this);
         Button myButton = new Button(this);
 
@@ -32,7 +34,18 @@ public class MainActivity extends AppCompatActivity {
         myLayout.setBackgroundColor(Color.BLUE);
 
         // Modify some editText attributes
-        myEditText.setText("Here's some text");
+
+        // .setWidth() required a pixel value. We want to use DiP's so we can
+        // maintain a consistent look across platforms. Do a little math to
+        // figure out how many screen pixels equate to the desired number of
+        // DiP's, in this case 200. Store that number as px.
+        Resources r = getResources();
+        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,200,
+                r.getDisplayMetrics()
+        );
+
+        // Use that number to set the width of the editText.
+        myEditText.setWidth(px);
 
         //Build a Layout for the button to live in.
         //This is a layout that will wrap the content of whatever is placed inside it.
